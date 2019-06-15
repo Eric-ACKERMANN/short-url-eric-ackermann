@@ -1,0 +1,63 @@
+h1 {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.header-content {
+  background-color: #4e3dbb;
+  color: #fefefe;
+  font-weight: 400;
+}
+
+.header-container {
+  max-width: 1024px;
+  margin: auto;
+  padding: 30px 0px 50px 0px;
+}
+
+.header-toolBlock {
+  position: relative;
+}
+
+.header-doubleCase {
+  position: absolute;
+}
+
+.header-tools {
+  display: flex;
+  flex-direction: row;
+}
+
+.header-tools > input {
+  max-width: 450px;
+  flex: auto;
+  font-size: 18px;
+  padding: 0px 10px;
+  border: none;
+}
+
+.header-tools > input::placeholder {
+  color: rgrgb(77, 77, 77);
+}
+
+.header-tools > button {
+  background-color: #fefefe;
+  color: #4e3dbb;
+  font-weight: 700;
+  font-size: 18px;
+  margin-left: 25px;
+  padding: 10px 10px;
+  outline: none;
+  border: none;
+}
+
+.header-tools > button:hover {
+  cursor: pointer;
+}
+
+.header-double-case {
+  background-color: lightgreen;
+}

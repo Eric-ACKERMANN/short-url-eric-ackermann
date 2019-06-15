@@ -1,26 +1,74 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from "react-router-dom";
+import Home from "./components/Home";
+import BlankPage from "./components/BlankPage";
+import axios from "axios";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    initialUrl: null,
+    urlList: null,
+    urlCalled: true
+  };
+
+  setUrlList = async toto => {
+    const response = await axios.get(
+      "https://reduc-url-server.herokuapp.com/url"
+    );
+    this.setState({ urlList: response.data });
+  };
+
+  getAppList = toto => {
+    this.setState({ urlList: toto });
+  };
+
+  onUrlCall = async (element, bool) => {
+    if (this.state.urlCalled === true) {
+      await axios.post("https://reduc-url-server.herokuapp.com/url/update", {
+        id: element._id,
+        url: {
+          views: element.views + 1
+        }
+      });
+    }
+    this.setState({ urlCalled: bool });
+    await this.setUrlList();
+  };
+
+  render() {
+    console.log("lol", this.state.urlList);
+    return (
+      <Router>
+        <Route
+          exact={true}
+          path="/"
+          render={props => {
+            return <Home getAppList={this.getAppList} />;
+          }}
+        />
+        <Route
+          path="/:char"
+          render={props => {
+            return (
+              <BlankPage
+                match={props.match}
+                urlList={this.state.urlList}
+                onUrlCall={this.onUrlCall}
+              />
+            );
+          }}
+        />
+      </Router>
+    );
+  }
+  async componentDidMount() {
+    await this.setUrlList();
+  }
 }
 
 export default App;

@@ -1,0 +1,37 @@
+.list-container {
+  max-width: 1024px;
+  margin: auto;
+  padding: 70px 0px 50px 0px;
+}
+
+.list-block > ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin: 0;
+  padding: 12px 20px;
+  justify-content: space-between;
+}
+
+.list-block > ul:nth-child(1) {
+  background-color: #f0f0f0;
+}
+
+.list-block > ul > li:nth-child(1) {
+  flex: 8;
+}
+
+.list-block > ul > li:nth-child(2) {
+  flex: 8;
+}
+.list-block > ul > li:nth-child(3) {
+  flex: 1;
+}
+.list-block > ul > li:nth-child(4) {
+  flex: 1;
+}
+
+.list-double-case {
+  background-color: lightgreen;
+  border-radius: 10px;
+}

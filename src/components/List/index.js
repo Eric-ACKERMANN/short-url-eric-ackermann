@@ -19,7 +19,9 @@ function List(props) {
               <ul
                 key={index}
                 className={
-                  element.initialURL === inputValue ? "list-double-case" : false
+                  element.initialURL === inputValue
+                    ? "list-double-case"
+                    : undefined
                 }
               >
                 <li>

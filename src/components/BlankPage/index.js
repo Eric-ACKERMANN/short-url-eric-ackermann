@@ -1,20 +1,33 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import "./index.css";
 
 function BlankPage(props) {
-  const { onUrlCall } = props;
+  const { onUrlCall, urlList } = props;
 
-  if (props.urlList) {
-    let extensionList = props.urlList.map(element => {
+  if (urlList) {
+    let extensionList = urlList.map(element => {
       return element.extension;
     });
+
     let position = extensionList.indexOf(props.match.params.char);
+
     if (position !== -1) {
-      let redirectLink = props.urlList[position].initialURL;
-      onUrlCall(props.urlList[position], false);
-      return (window.location = redirectLink);
+      let redirectLink = urlList[position].initialURL;
+      onUrlCall(urlList[position], false);
+
+      return (
+        <div className="blankPage-block">
+          <div>{(window.location = redirectLink)}</div>
+        </div>
+      );
     } else {
-      return <Redirect to={"/"} />;
+      return (
+        <div>
+          <div>Redirecting....</div>;
+          <Redirect to={"/"} />
+        </div>
+      );
     }
   } else {
     return <div>Redirecting....</div>;

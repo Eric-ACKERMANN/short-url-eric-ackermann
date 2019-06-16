@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home";
 import BlankPage from "./components/BlankPage";
 import axios from "axios";
@@ -41,7 +36,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log("lol", this.state.urlList);
     return (
       <Router>
         <Route

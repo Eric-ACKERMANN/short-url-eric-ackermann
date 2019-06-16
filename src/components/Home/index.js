@@ -5,7 +5,7 @@ import axios from "axios";
 
 class Home extends React.Component {
   state = {
-    inputValue: null,
+    inputValue: "",
     urlList: null,
     isLoading: false,
     test: [],
@@ -29,7 +29,6 @@ class Home extends React.Component {
       return e.initialURL;
     });
     let position = initialUrlArray.indexOf(this.state.inputValue);
-    console.log(position);
     if (position !== -1) {
       this.setState({ double: true });
     } else {
@@ -69,7 +68,10 @@ class Home extends React.Component {
       extension: random
     });
 
-    await this.setUrlList();
+    const response = await axios.get(
+      "https://reduc-url-server.herokuapp.com/url"
+    );
+    this.setState({ urlList: response.data, inputValue: "" });
     this.props.getAppList(this.state.urlList);
   };
 
@@ -107,6 +109,7 @@ class Home extends React.Component {
           handleChange={this.handleChange}
           handleClick={this.handleClick}
           double={this.state.double}
+          inputValue={this.state.inputValue}
         />
         <List
           urlList={this.state.urlList}

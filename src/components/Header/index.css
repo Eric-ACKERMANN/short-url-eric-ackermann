@@ -39,12 +39,11 @@ h1 {
   border: none;
 }
 
-.header-tools > input::placeholder {
-  color: rgrgb(77, 77, 77);
+.header-doubleCaseInput {
+  background-color: rgb(253, 234, 223);
 }
 
 .header-tools > button {
-  background-color: #fefefe;
   color: #4e3dbb;
   font-weight: 700;
   font-size: 18px;
@@ -58,6 +57,18 @@ h1 {
   cursor: pointer;
 }
 
-.header-double-case {
-  background-color: lightgreen;
+.header-tools > input::placeholder {
+  color: rgrgb(77, 77, 77);
+}
+
+.header-button-active {
+  background-color: #fefefe;
+}
+
+.header-button-disable {
+  background-color: rgba(250, 250, 250, 0.7);
+}
+
+.header-tools > button:hover {
+  cursor: pointer;
 }

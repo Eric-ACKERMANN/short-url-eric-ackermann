@@ -3,6 +3,17 @@ import "./index.css";
 
 function Header(props) {
   const { inputValue, handleChange, handleClick, double } = props;
+
+  let expression = /^https?:\/\/[/\S\w*/]{1,256}\.[a-z]{1,256}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
+  let regex = new RegExp(expression);
+
+  // let expression = /^https?:\/\/(www\.)[/\S\w*/]{1,256}\.[a-z]{1,256}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
+  let buttonDisabled = false;
+  if (double || inputValue === "" || !inputValue.match(regex)) {
+    buttonDisabled = true;
+  } else {
+    buttonDisabled = false;
+  }
   return (
     <div className="header-content">
       <div className="header-container">
@@ -10,17 +21,32 @@ function Header(props) {
         <div className="header-toolsBlock">
           <div className="header-tools">
             <input
-              className={double ? "header-double-case" : false}
+              className={double ? "header-doubleCaseInput" : undefined}
               placeholder="Your original URL here"
               value={inputValue}
               onChange={handleChange}
             />
 
-            <button onClick={double ? false : handleClick}>SHORTEN URL</button>
+            <button
+              onClick={buttonDisabled ? false : handleClick}
+              className={
+                buttonDisabled
+                  ? "header-button-disable"
+                  : "header-button-active"
+              }
+            >
+              SHORTEN URL
+            </button>
           </div>
           {double && (
             <span className="header-doubleCase">
               This link has already been simplified, please check below !
+            </span>
+          )}
+          {inputValue && !inputValue.match(regex) && (
+            <span className="header-doubleCase">
+              URL invalid, set a valid one, exemple :
+              "https://www.lereacteur.io" or "http://lereacteur.io"
             </span>
           )}
         </div>

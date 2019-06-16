@@ -2,41 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home";
 import BlankPage from "./components/BlankPage";
-import axios from "axios";
 
 class App extends React.Component {
-  state = {
-    initialUrl: null,
-    urlList: null,
-    urlCalled: true
-  };
-
-  setUrlList = async toto => {
-    const response = await axios.get(
-      "https://reduc-url-server.herokuapp.com/url"
-    );
-    this.setState({ urlList: response.data });
-  };
-
-  // Function to get the urlList updated to main component App
-  getAppList = toto => {
-    this.setState({ urlList: toto });
-  };
-
-  // Function to get the views when url is copied in url of the browser
-  onUrlCall = async (element, bool) => {
-    if (this.state.urlCalled === true) {
-      await axios.post("https://reduc-url-server.herokuapp.com/url/update", {
-        id: element._id,
-        url: {
-          views: element.views + 1
-        }
-      });
-    }
-    this.setState({ urlCalled: bool });
-    await this.setUrlList();
-  };
-
   render() {
     return (
       <Router>
@@ -44,19 +11,13 @@ class App extends React.Component {
           exact={true}
           path="/"
           render={props => {
-            return <Home getAppList={this.getAppList} />;
+            return <Home />;
           }}
         />
         <Route
           path="/:char"
           render={props => {
-            return (
-              <BlankPage
-                match={props.match}
-                urlList={this.state.urlList}
-                onUrlCall={this.onUrlCall}
-              />
-            );
+            return <BlankPage match={props.match} />;
           }}
         />
       </Router>

@@ -181,7 +181,6 @@ class Home extends React.Component {
       "https://reduc-url-server.herokuapp.com/url"
     );
     this.setState({ urlList: response.data, inputValue: "" });
-    this.props.getAppList(this.state.urlList);
   };
 
   onShortUrlClick = async element => {
@@ -192,7 +191,6 @@ class Home extends React.Component {
       }
     });
     await this.setUrlList();
-    this.props.getAppList(this.state.urlList);
   };
   // Function only used in prod
   // deleteClick = async toto => {
@@ -200,7 +198,6 @@ class Home extends React.Component {
   //     id: toto
   //   });
   //   await this.setUrlList();
-  //   this.props.getAppList();
   // };
 
   render() {
@@ -229,7 +226,6 @@ class Home extends React.Component {
 
   async componentDidMount() {
     await this.setUrlList();
-    this.props.getAppList(this.state.urlList);
     this.setState({ isLoading: false });
   }
 }

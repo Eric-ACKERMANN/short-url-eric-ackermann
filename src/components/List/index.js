@@ -4,7 +4,7 @@ import "./index.css";
 function List(props) {
   const {
     urlList,
-    deleteClick,
+    // deleteClick,
     onShortUrlClick,
     double,
     doublePosition

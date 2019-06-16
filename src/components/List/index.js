@@ -5,7 +5,6 @@ function List(props) {
   const {
     urlList,
     // deleteClick,
-    onShortUrlClick,
     double,
     doublePosition
   } = props;
@@ -34,14 +33,7 @@ function List(props) {
                   <a href={element.initialURL}>{element.initialURL}</a>
                 </li>
                 <li>
-                  <a
-                    href={element.shortURL}
-                    onClick={() => {
-                      onShortUrlClick(element);
-                    }}
-                  >
-                    {element.shortURL}
-                  </a>
+                  <a href={element.shortURL}>{element.shortURL}</a>
                 </li>
                 <li>{element.views}</li>
                 {/* <li>

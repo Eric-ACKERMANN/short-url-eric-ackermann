@@ -23,9 +23,6 @@ class App extends React.Component {
       </Router>
     );
   }
-  async componentDidMount() {
-    await this.setUrlList();
-  }
 }
 
 export default App;

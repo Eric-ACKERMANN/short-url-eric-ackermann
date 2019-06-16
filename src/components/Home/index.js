@@ -183,15 +183,6 @@ class Home extends React.Component {
     this.setState({ urlList: response.data, inputValue: "" });
   };
 
-  onShortUrlClick = async element => {
-    await axios.post("https://reduc-url-server.herokuapp.com/url/update", {
-      id: element._id,
-      url: {
-        views: element.views + 1
-      }
-    });
-    await this.setUrlList();
-  };
   // Function only used in prod
   // deleteClick = async toto => {
   //   await axios.post("https://reduc-url-server.herokuapp.com/url/delete", {
@@ -216,7 +207,6 @@ class Home extends React.Component {
         <List
           urlList={this.state.urlList}
           // deleteClick={this.deleteClick}
-          onShortUrlClick={this.onShortUrlClick}
           doublePosition={this.state.doublePosition}
           double={this.state.double}
         />

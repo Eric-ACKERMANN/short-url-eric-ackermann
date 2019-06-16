@@ -6,6 +6,12 @@ function Header(props) {
 
   let expression = /^https?:\/\/[/\S\w*/]{1,256}\.[a-z]{1,256}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)?$/gi;
   let regex = new RegExp(expression);
+
+  // Button is disabled if :
+  // 1. No value in input
+  // 2. URL in input already in list below (double)
+  // 3. URL invalid (regex)
+
   let buttonDisabled = false;
   if (double || inputValue === "" || !inputValue.match(regex)) {
     buttonDisabled = true;

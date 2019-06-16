@@ -13,7 +13,7 @@ class Home extends React.Component {
     doublePosition: null
   };
 
-  // Function to get url List form server
+  // Function to get url List from server
   setUrlList = async toto => {
     const response = await axios.get(
       "https://reduc-url-server.herokuapp.com/url"
@@ -21,32 +21,7 @@ class Home extends React.Component {
     this.setState({ urlList: response.data });
   };
 
-  // Function to handle the input in header
-  handleChange = async event => {
-    await this.setState({ inputValue: event.target.value });
-
-    let initialUrlList = [];
-    if (this.state.urlList) {
-      initialUrlList = this.state.urlList.map(element => {
-        return element.initialURL;
-      });
-    }
-    if (this.matchInput(this.state.inputValue, initialUrlList)[0]) {
-      this.setState({ double: true });
-      this.setState({
-        doublePosition: this.matchInput(
-          this.state.inputValue,
-          initialUrlList
-        )[1]
-      });
-    } else {
-      if (this.state.double) {
-        this.setState({ double: false });
-      }
-    }
-  };
-
-  // Double case, functions to check if the link written in input is already in the list
+  // Function that split into array what is in the input, type : http://www.google.fr >> [http:,,[www,google,fr]], used in matchInput method
   splitInput = input => {
     if (this.state.inputValue) {
       input = input.split("/");
@@ -57,22 +32,21 @@ class Home extends React.Component {
     } else return false;
   };
 
+  // Function to check in two arrays are equal, use in matchInput method
   arraysEqual = (a, b) => {
     if (a === b) return true;
     if (a == null || b == null) return false;
     if (a.length !== b.length) return false;
 
-    // If you don't care about the order of the elements inside
-    // the array, you should sort both arrays here.
-    // Please note that calling sort on an array will modify that array.
-    // you might want to clone your array first.
-
-    for (var i = 0; i < a.length; ++i) {
+    for (let i = 0; i < a.length; ++i) {
       if (a[i] !== b[i]) return false;
     }
     return true;
   };
 
+  // Function to check if the URL in input is already in list below,
+  // NOTE : https://www.google.fr matches with https://google.fr  and https://www.google.fr/
+  // the www. and the / at end of URL is considered as not necessary to create another URL in list
   matchInput = (input, array) => {
     if (this.state.inputValue.length > 0 && this.state.urlList) {
       let array2 = [...array];
@@ -82,15 +56,15 @@ class Home extends React.Component {
       }
       input2 = this.splitInput(input2);
 
+      // If last element is "" , means the url is https://www.google.fr/ type, we remove the / at the end
       if (input2[input2.length - 1] === "") {
         input2.pop();
       }
       for (let i = 0; i < array2.length; i++) {
-        // We check if we have www.leboncoin.fr/ to turn it into www.leboncoin.fr
+        // We check input if we have www.leboncoin.fr/ to turn it into www.leboncoin.fr for all URL in list
         if (array2[i][array2[i].length - 1] === "") {
           array2[i].pop();
         }
-        // We check if links have same length /
 
         if (
           array2[i].length === input2.length &&
@@ -139,6 +113,7 @@ class Home extends React.Component {
               bool2 = false;
             }
           }
+          // If input and Array[i] match, the e return true and the position of the URL in list
           if (bool2) {
             return [true, i];
           }
@@ -146,6 +121,32 @@ class Home extends React.Component {
       }
     }
     return false;
+  };
+
+  // Function to handle the input in header
+  handleChange = async event => {
+    await this.setState({ inputValue: event.target.value });
+
+    let initialUrlList = [];
+    if (this.state.urlList) {
+      initialUrlList = this.state.urlList.map(element => {
+        return element.initialURL;
+      });
+    }
+    // Check if inputValue and an URL in list match
+    if (this.matchInput(this.state.inputValue, initialUrlList)[0]) {
+      this.setState({ double: true });
+      this.setState({
+        doublePosition: this.matchInput(
+          this.state.inputValue,
+          initialUrlList
+        )[1]
+      });
+    } else {
+      if (this.state.double) {
+        this.setState({ double: false });
+      }
+    }
   };
 
   // Function to get a random Number for unicode char a-z or A-Z or 1-9

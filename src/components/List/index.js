@@ -35,7 +35,7 @@ function List(props) {
                 </li>
                 <li>
                   <a
-                    href={element.initialURL}
+                    href={element.shortURL}
                     onClick={() => {
                       onShortUrlClick(element);
                     }}

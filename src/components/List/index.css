@@ -40,9 +40,7 @@
 }
 
 .list-double-case {
-  background-color: rgba(0, 128, 0, 0.05);
-
-  border-radius: 10px;
+  background-color: rgb(225, 255, 225);
 }
 
 .list-block > ul > li > a {

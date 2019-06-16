@@ -24,6 +24,7 @@ h1 {
 
 .header-doubleCase {
   position: absolute;
+  font-weight: 600;
 }
 
 .header-doubleCase-title {

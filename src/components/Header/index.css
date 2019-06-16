@@ -26,6 +26,15 @@ h1 {
   position: absolute;
 }
 
+.header-doubleCase-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.header-doubleCase-text {
+  font-style: italic;
+}
+
 .header-tools {
   display: flex;
   flex-direction: row;
@@ -37,10 +46,12 @@ h1 {
   font-size: 18px;
   padding: 0px 10px;
   border: none;
+  outline: none;
 }
 
 .header-doubleCaseInput {
-  background-color: rgb(253, 234, 223);
+  background-color: rgb(225, 255, 225);
+  border: green;
 }
 
 .header-tools > button {

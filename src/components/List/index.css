@@ -32,6 +32,8 @@
 }
 
 .list-double-case {
-  background-color: lightgreen;
+  border: 2px solid green;
+  background-color: rgba(0, 128, 0, 0.05);
+
   border-radius: 10px;
 }

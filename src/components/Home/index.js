@@ -9,7 +9,8 @@ class Home extends React.Component {
     urlList: null,
     isLoading: false,
     test: [],
-    double: false
+    double: false,
+    doublePosition: null
   };
 
   // Function to get url List form server
@@ -24,18 +25,127 @@ class Home extends React.Component {
   handleChange = async event => {
     await this.setState({ inputValue: event.target.value });
 
-    // Doublon case
-    let initialUrlArray = this.state.urlList.map(e => {
-      return e.initialURL;
-    });
-    let position = initialUrlArray.indexOf(this.state.inputValue);
-    if (position !== -1) {
+    let initialUrlList = [];
+    if (this.state.urlList) {
+      initialUrlList = this.state.urlList.map(element => {
+        return element.initialURL;
+      });
+    }
+    if (this.matchInput(this.state.inputValue, initialUrlList)[0]) {
       this.setState({ double: true });
+      this.setState({
+        doublePosition: this.matchInput(
+          this.state.inputValue,
+          initialUrlList
+        )[1]
+      });
     } else {
       if (this.state.double) {
         this.setState({ double: false });
       }
     }
+  };
+
+  // Double case, functions to check if the link written in input is already in the list
+  splitInput = input => {
+    if (this.state.inputValue) {
+      input = input.split("/");
+      if (input[2]) {
+        input[2] = input[2].split(".");
+      }
+      return input;
+    } else return false;
+  };
+
+  arraysEqual = (a, b) => {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+    // Please note that calling sort on an array will modify that array.
+    // you might want to clone your array first.
+
+    for (var i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  };
+
+  matchInput = (input, array) => {
+    if (this.state.inputValue.length > 0 && this.state.urlList) {
+      let array2 = [...array];
+      let input2 = input;
+      for (let i = 0; i < array2.length; i++) {
+        array2[i] = this.splitInput(array2[i]);
+      }
+      input2 = this.splitInput(input2);
+
+      if (input2[input2.length - 1] === "") {
+        input2.pop();
+      }
+      for (let i = 0; i < array2.length; i++) {
+        // We check if we have www.leboncoin.fr/ to turn it into www.leboncoin.fr
+        if (array2[i][array2[i].length - 1] === "") {
+          array2[i].pop();
+        }
+        // We check if links have same length /
+
+        if (
+          array2[i].length === input2.length &&
+          (this.arraysEqual(
+            array2[i][array2[i].length - 1],
+            input2[input2.length - 1]
+          ) ||
+            input2.length === 3)
+        ) {
+          // array2[i] is [https:,,[www,google,fr],annonces,etc]
+          // array2[i][2] is [www,google,fr]
+
+          // array2[i] is [https:,,[google,fr],annonces,etc]
+          // array2[i][2] is [google,fr]
+
+          // array2[i] is [https:,,[projects,invisionsapp,com],annonces,etc]
+          // array2[i][2] is [projects,invisionapp,com]
+
+          // array2[i] is [https:,,[google,fr],annonces,etc]
+          // array2[i][2] is [google,fr]
+          let bool = Array(array2[i][2].length).fill(false);
+          let bool2 = true;
+
+          for (let j = 0; j < array2[i][2].length; j++) {
+            if (
+              array2[i][2][array2[i][2].length - 1 - j] ===
+              input2[2][input2[2].length - 1 - j]
+            ) {
+              bool[j] = true;
+            }
+            if (
+              array2[i][2][0] === "www" &&
+              array2[i][2].length === input2[2].length + 1
+            ) {
+              bool[array2[i][2].length - 1] = true;
+            }
+            if (
+              input2[2][0] === "www" &&
+              array2[i][2].length === input2[2].length - 1
+            ) {
+              bool[array2[i][2].length - 1] = true;
+            }
+          }
+          for (let i = 0; i < bool.length; i++) {
+            if (bool[i] === false) {
+              bool2 = false;
+            }
+          }
+          if (bool2) {
+            return [true, i];
+          }
+        }
+      }
+    }
+    return false;
   };
 
   // Function to get a random Number for unicode char a-z or A-Z or 1-9
@@ -47,7 +157,7 @@ class Home extends React.Component {
     return random;
   };
 
-  //Function t create a string of 5 random characters
+  //Function to create a string of 5 random characters
   randomChar = () => {
     let str = "";
     for (let i = 0; i < 5; i++) {
@@ -57,10 +167,10 @@ class Home extends React.Component {
     return str;
   };
 
-  // Function to handle the click on "SHORTEN URL"
+  // Function to handle the click on button "SHORTEN URL"
   handleClick = async toto => {
     let random = this.randomChar();
-    let shortURL = `localhost:3000/${random}`;
+    let shortURL = `https://short-url-eric-ackermann.herokuapp.com/${random}`;
     // https://short-url-eric-ackermann.herokuapp.com
     await axios.post("https://reduc-url-server.herokuapp.com/url/create", {
       initialURL: this.state.inputValue,
@@ -94,14 +204,10 @@ class Home extends React.Component {
     this.props.getAppList();
   };
 
-  // Double URL case
-
   render() {
     if (this.state.isLoading) {
       return <div>En cours de chargement...</div>;
     }
-
-    // Double URL case
 
     return (
       <div>
@@ -115,7 +221,8 @@ class Home extends React.Component {
           urlList={this.state.urlList}
           deleteClick={this.deleteClick}
           onShortUrlClick={this.onShortUrlClick}
-          inputValue={this.state.inputValue}
+          doublePosition={this.state.doublePosition}
+          double={this.state.double}
         />
       </div>
     );

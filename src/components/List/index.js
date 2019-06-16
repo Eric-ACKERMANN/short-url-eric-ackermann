@@ -2,7 +2,13 @@ import React from "react";
 import "./index.css";
 
 function List(props) {
-  const { urlList, deleteClick, onShortUrlClick, inputValue } = props;
+  const {
+    urlList,
+    deleteClick,
+    onShortUrlClick,
+    double,
+    doublePosition
+  } = props;
   return (
     <div className="list-container">
       <div className="list-block">
@@ -19,7 +25,7 @@ function List(props) {
               <ul
                 key={index}
                 className={
-                  element.initialURL === inputValue
+                  double && index === doublePosition
                     ? "list-double-case"
                     : undefined
                 }

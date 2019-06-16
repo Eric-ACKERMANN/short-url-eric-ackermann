@@ -4,7 +4,7 @@ import "./index.css";
 function Header(props) {
   const { inputValue, handleChange, handleClick, double } = props;
 
-  let expression = /^https?:\/\/[/\S\w*/]{1,256}\.[a-z]{1,256}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
+  let expression = /^https?:\/\/[/\S\w*/]{1,256}\.[a-z]{1,256}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)?$/gi;
   let regex = new RegExp(expression);
 
   // let expression = /^https?:\/\/(www\.)[/\S\w*/]{1,256}\.[a-z]{1,256}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
@@ -40,7 +40,15 @@ function Header(props) {
           </div>
           {double && (
             <span className="header-doubleCase">
-              This link has already been simplified, please check below !
+              <span className="header-doubleCase-title">
+                This link has already been simplified, please check below!
+              </span>
+              <br />
+              <span className="header-doubleCase-text">
+                Note: https://www.lereacteur.io is considered the same as
+                https://lereacteur.io, https://lereacteur.io/,
+                https://www.lereacteur.io/
+              </span>
             </span>
           )}
           {inputValue && !inputValue.match(regex) && (

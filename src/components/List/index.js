@@ -16,7 +16,7 @@ function List(props) {
           <li>Original URL</li>
           <li>Short URL</li>
           <li>Visits</li>
-          <li>Delete</li>
+          {/* <li>Delete</li> */}
         </ul>
 
         {urlList &&
@@ -44,11 +44,11 @@ function List(props) {
                   </a>
                 </li>
                 <li>{element.views}</li>
-                <li>
+                {/* <li>
                   <button onClick={() => deleteClick(element._id)}>
                     Delete
                   </button>
-                </li>
+                </li> */}
               </ul>
             );
           })}

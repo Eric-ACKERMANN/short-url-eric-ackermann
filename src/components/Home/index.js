@@ -171,7 +171,6 @@ class Home extends React.Component {
   handleClick = async toto => {
     let random = this.randomChar();
     let shortURL = `https://short-url-eric-ackermann.herokuapp.com/${random}`;
-    // https://short-url-eric-ackermann.herokuapp.com
     await axios.post("https://reduc-url-server.herokuapp.com/url/create", {
       initialURL: this.state.inputValue,
       shortURL: shortURL,
@@ -196,13 +195,13 @@ class Home extends React.Component {
     this.props.getAppList(this.state.urlList);
   };
   // Function only used in prod
-  deleteClick = async toto => {
-    await axios.post("https://reduc-url-server.herokuapp.com/url/delete", {
-      id: toto
-    });
-    await this.setUrlList();
-    this.props.getAppList();
-  };
+  // deleteClick = async toto => {
+  //   await axios.post("https://reduc-url-server.herokuapp.com/url/delete", {
+  //     id: toto
+  //   });
+  //   await this.setUrlList();
+  //   this.props.getAppList();
+  // };
 
   render() {
     if (this.state.isLoading) {
@@ -219,7 +218,7 @@ class Home extends React.Component {
         />
         <List
           urlList={this.state.urlList}
-          deleteClick={this.deleteClick}
+          // deleteClick={this.deleteClick}
           onShortUrlClick={this.onShortUrlClick}
           doublePosition={this.state.doublePosition}
           double={this.state.double}

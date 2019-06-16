@@ -18,10 +18,12 @@ class App extends React.Component {
     this.setState({ urlList: response.data });
   };
 
+  // Function to get the urlList updated to main component App
   getAppList = toto => {
     this.setState({ urlList: toto });
   };
 
+  // Function to get the views when url is copied in url of the browser
   onUrlCall = async (element, bool) => {
     if (this.state.urlCalled === true) {
       await axios.post("https://reduc-url-server.herokuapp.com/url/update", {

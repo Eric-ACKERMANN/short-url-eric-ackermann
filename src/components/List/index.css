@@ -11,18 +11,26 @@
   margin: 0;
   padding: 12px 20px;
   justify-content: space-between;
+  border-bottom: 1px solid rgb(180, 180, 180);
+  word-wrap: break-word;
+  align-items: center;
 }
 
 .list-block > ul:nth-child(1) {
   background-color: #f0f0f0;
+  border: none;
+  color: rgb(97, 96, 96);
 }
 
 .list-block > ul > li:nth-child(1) {
-  flex: 8;
+  width: 48%;
+  word-wrap: break-word;
 }
 
 .list-block > ul > li:nth-child(2) {
-  flex: 8;
+  width: 48%;
+  flex-wrap: wrap;
+  word-wrap: break-word;
 }
 .list-block > ul > li:nth-child(3) {
   flex: 1;
@@ -32,8 +40,11 @@
 }
 
 .list-double-case {
-  border: 2px solid green;
   background-color: rgba(0, 128, 0, 0.05);
 
   border-radius: 10px;
+}
+
+.list-block > ul > li > a {
+  color: rgb(5, 137, 199);
 }
